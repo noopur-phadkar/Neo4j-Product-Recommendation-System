@@ -1,6 +1,5 @@
 # Product-Recommender-System
-This is a Real-Time Product Recommender System with Graph Databases: Leveraging Neo4j and BigQuery for E-commerce Data Analysis
-
+In this repository, I'm documenting my progress as I learn about Graph databases by building a Real-Time Product Recommender System with Neo4j.
 
 ## Recommendation Systems
 
