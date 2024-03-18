@@ -9,25 +9,15 @@ Author: Noopur Phadkar
 
 from google.cloud import bigquery
 
-# Set up credentials
-# Replace 'path/to/your/credentials.json' with the path to your JSON key file.
-# If running on Google Cloud, you don't need to specify the credentials explicitly.
-credentials_path = 'path/to/your/credentials.json'
-client = bigquery.Client.from_service_account_json(credentials_path)
+def get_bigquery_client(credentials_path):
+    """Function to get a BigQuery client"""
+    return bigquery.Client.from_service_account_json(credentials_path)
 
-# Define your project ID and dataset ID
-project_id = 'your-project-id'
-dataset_id = 'your-dataset-id'
+def get_dataset(client, project_id, dataset_id):
+    """Function to get a dataset from BigQuery"""
+    dataset_ref = client.dataset(dataset_id, project=project_id)
+    return client.get_dataset(dataset_ref)
 
-# Construct a reference to the dataset
-dataset_ref = client.dataset(dataset_id, project=project_id)
-
-# API request - fetch the dataset
-dataset = client.get_dataset(dataset_ref)
-
-print('Dataset ID: {}'.format(dataset.dataset_id))
-print('Full ID: {}'.format(dataset.full_dataset_id))
-print('Project: {}'.format(dataset.project))
-print('Tables:')
-for table in client.list_tables(dataset):
-    print('\t{}'.format(table.table_id))
+def list_tables(client, dataset):
+    """Function to list tables in a dataset"""
+    return [table.table_id for table in client.list_tables(dataset)]
