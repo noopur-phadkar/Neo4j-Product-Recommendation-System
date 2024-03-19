@@ -1,0 +1,13 @@
+This cypher query will find recommendations for user with id=1 belonging to the same category as things he has previously purchased.
+
+MATCH (user1:User {id: 1}) -[:PURCHASED]-> (:Product) -[:BELONGS_TO]-> (:Category) <-[:BELONGS_TO]- (product2:Product)
+WHERE NOT (user1) -[:PURCHASED]-> (product2)
+RETURN user1, product2
+
+This cypher query creates a list of recommendations based on the customer’s most favorite category.
+
+MATCH(u:User {id: 2}) -[:PURCHASED]-> (p:Product) -[:BELONGS_TO]-> (c:Category)
+WITH u, p, c, c.category_name as category, Count(c) AS cnt ORDER BY COUNT (c) DESC LIMIT 1
+MATCH (:Category {category_name: category}) <-[:BELONGS_TO]- (q:Product)
+WHERE NOT (u) -[:PURCHASED]-> (q)
+RETURN category, p.title AS PURCHASED, q.title AS recommendation
