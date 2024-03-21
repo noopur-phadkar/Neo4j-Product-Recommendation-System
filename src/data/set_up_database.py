@@ -51,7 +51,10 @@ def create_product_nodes(neo_driver):
 
     with neo_driver.session() as session:               # Create product nodes in Neo4j
         for product in products:
-            session.write_transaction(create_product_node, product)
+            try:
+                session.write_transaction(create_product_node, product)  # or create_user_node for users
+            except Exception as e:
+                print(f"Error occurred: {e}")  # Log the error or handle it as needed
 
     relate_products_to_categories(neo_driver)           # Establish 'BelongsTo' relationships between products and categories
 
@@ -116,7 +119,10 @@ Function to create user nodes in Neo4j    :param neo_driver: Neo4j Connection Dr
 
     with neo_driver.session() as session:
         for user in users:
-            session.write_transaction(create_user_node, user)
+            try:
+                session.write_transaction(create_user_node, user)  # or create_user_node for users
+            except Exception as e:
+                print(f"Error occurred: {e}")  # Log the error or handle it as needed
 
 
 def process_cart_data(neo_driver):

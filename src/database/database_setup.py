@@ -9,8 +9,10 @@ class DatabaseSetup:
         self.driver.close()
 
     def create_constraints(self):
-        # Create constraints (if any) for your database
-        pass
+        with self.driver.session() as session:
+            session.run("CREATE CONSTRAINT ON (u:User) ASSERT u.id IS UNIQUE")
+            session.run("CREATE CONSTRAINT ON (p:Product) ASSERT p.id IS UNIQUE")
+            session.run("CREATE CONSTRAINT ON (c:Category) ASSERT c.name IS UNIQUE")
 
     def load_initial_data(self):
         # Method to load initial data into the database
