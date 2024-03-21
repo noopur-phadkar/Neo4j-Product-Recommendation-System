@@ -70,7 +70,7 @@ Refer to `USAGE.md` for detailed instructions on using the system.
 See `DEVELOPMENT.md` for information on system architecture, contributing guidelines, and development notes.
 
 ## License
-This project is licensed under the [MIT License](LICENSE.md).
+This project is licensed under the [MIT License](/src/docs/LICENSE.md).
 
 ## Contact
 - Your Name
