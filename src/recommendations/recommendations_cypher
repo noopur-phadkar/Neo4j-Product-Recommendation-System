@@ -1,3 +1,11 @@
+This cypher code shows all th enodes in the graph.
+
+MATCH(n) RETURN n
+
+This cypher code detaches and deletes all the nodes in the graph.
+
+MATCH(n) DETACH DELETE n
+
 This cypher query will find recommendations for user with id=1 belonging to the same category as things he has previously purchased.
 
 MATCH (user1:User {id: 1}) -[:PURCHASED]-> (:Product) -[:BELONGS_TO]-> (:Category) <-[:BELONGS_TO]- (product2:Product)
