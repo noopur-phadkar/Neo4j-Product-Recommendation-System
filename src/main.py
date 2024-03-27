@@ -24,10 +24,7 @@ def main():
     print("User-Based Collaborative Recommendations:")
     print(collaborative_filter.get_user_based_recommendations(user_id))
 
-    print("Item-Based Collaborative Recommendations:")
-    print(collaborative_filter.get_item_based_recommendations(user_id))
-
-    print("Item-Based Collaborative Recommendations:")
+    print("Category-Based Collaborative Recommendations:")
     print(collaborative_filter.get_category_based_recommendations(user_id))
 
     # Close database connection
