@@ -21,11 +21,11 @@ This system is a real-time product recommendation engine using Neo4j. It's desig
 
 ### Data Sources
 - Initially utilizes data from [Fake Store API](https://fakestoreapi.com) for development and testing.
-- Final implementation will leverage data from Google's BigQuery.
+- Final implementation leverages Real-time data stream from Google's BigQuery dataset - [theLook eCommerce](https://console.cloud.google.com/bigquery?p=bigquery-public-data&d=thelook_ecommerce&page=dataset&project=recommendation-system-418420&ws=!1m4!1m3!3m2!1sbigquery-public-data!2sthelook_ecommerce).
 
 ## Recommendation Systems
 
-Recommendation systems help customers find products they are interested in and increase the likelihood of making a purchase.
+Recommendation systems help customers find products they are interested in and increase the likelihood of purchasing.
 
 The two primary types of recommender systems
 - **Content-based systems** focus on the similarities between products. For instance, products in the same category as those previously purchased by the user are recommended. 
@@ -33,7 +33,7 @@ The two primary types of recommender systems
 
 ## Why use graph databases for recommendation systems?
 
-A graph database is highly beneficial for a recommender system because it can efficiently handle complex and interconnected data. 
+A graph database greatly benefits a recommender system because it can efficiently handle complex and interconnected data. 
 
 In such databases, data is stored as nodes and edges, representing entities and their relationships. This structure is inherently suitable for recommender systems, which rely heavily on relationship analysis and pattern recognition. 
 
@@ -64,7 +64,7 @@ For recommendations, execute:
 
 
 ## Usage
-Refer to [USAGE.md](src/docs/USAGE.md) for detailed instructions on using the system.
+Refer to [USAGE.md](src/docs/USAGE.md) for detailed instructions.
 
 ## Development
 See `DEVELOPMENT.md` for information on system architecture, contributing guidelines, and development notes.
