@@ -42,11 +42,13 @@ results = query_job.result()
 # Convert results to pandas DataFrame
 df = pd.DataFrame(results)
 
+
 # Function to import data into Neo4j
 def import_data(tx, data):
     for index, row in data.iterrows():
         # Assuming data format matches your node structure
         tx.run("CREATE (:Node {property: $property})", property=row['property'])
+
 
 # Import data into Neo4j
 with neo_driver.session() as session:
