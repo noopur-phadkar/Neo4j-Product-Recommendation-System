@@ -26,18 +26,6 @@ class ProductRecommender:
             result = session.run(query, user_id=target_user_id, top_n=top_n)
             return [record["Product"] for record in result]
 
-    def get_item_based_recommendations(self, target_user_id, top_n=5):
-        query = """
-        MATCH (target:User {id: $user_id})-[:PURCHASED]->(purchased:Product)
-        MATCH (purchased)<-[:PURCHASED]-(similar:User)-[:PURCHASED]->(recommended:Product)
-        WHERE NOT (target)-[:PURCHASED]->(recommended)
-        RETURN recommended.title AS Product, COUNT(*) AS Frequency
-        ORDER BY Frequency DESC LIMIT $top_n
-        """
-        with self.driver.session() as session:
-            result = session.run(query, user_id=target_user_id, top_n=top_n)
-            return [record["Product"] for record in result]
-
     def get_category_based_recommendations(self, target_user_id, top_n=5):
         query = """
         MATCH (u:User {id: $user_id})-[:PURCHASED]->(p:Product)-[:BELONGS_TO]->(c:Category)

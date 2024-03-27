@@ -27,16 +27,10 @@ def create_product_node(tx, product):
     """
     tx.run(
         """
-        CREATE (:Product {id: $id, title: $title, price: $price, description: $description, category_name: $category_name, image: $image, rating_rate: $rating_rate, rating_count: $rating_count})
+        CREATE (:Product {id: $id, title: $title})
         """,
         id=product['id'],
         title=product['title'],
-        price=product['price'],
-        description=product['description'],
-        category_name=product['category'],
-        image=product['image'],
-        rating_rate=product['rating']['rate'],
-        rating_count=product['rating']['count']
     )
 
 
@@ -92,21 +86,11 @@ def create_user_node(tx, user):
     """
     tx.run(
         """
-        CREATE (:User {id: $id, email: $email, username: $username, password: $password, firstname: $firstname, lastname: $lastname, phone: $phone, street: $street, number: $number, city: $city, zipcode: $zipcode, latitude: $latitude, longitude: $longitude})
+        CREATE (:User {id: $id, , firstname: $firstname, lastname: $lastname})
         """,
         id=user['id'],
-        email=user['email'],
-        username=user['username'],
-        password=user['password'],
         firstname=user['name']['firstname'],
-        lastname=user['name']['lastname'],
-        phone=user['phone'],
-        street=user['address']['street'],
-        number=user['address']['number'],
-        city=user['address']['city'],
-        zipcode=user['address']['zipcode'],
-        latitude=user['address']['geolocation']['lat'],
-        longitude=user['address']['geolocation']['long']
+        lastname=user['name']['lastname']
     )
 
 
@@ -138,17 +122,15 @@ def process_cart_data(neo_driver):
             user_id = cart['userId']
             for product in cart['products']:
                 product_id = product['productId']
-                quantity = product['quantity']
                 # Establish 'Purchased' relationship between user and product
                 session.run(
                     """
                     MATCH (u:User {id: $user_id})
                     MATCH (p:Product {id: $product_id})
-                    CREATE (u)-[:PURCHASED {quantity: $quantity}]->(p)
+                    CREATE (u)-[:PURCHASED]->(p)
                     """,
                     user_id=user_id,
-                    product_id=product_id,
-                    quantity=quantity
+                    product_id=product_id
                 )
 
 
