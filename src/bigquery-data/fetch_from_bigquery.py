@@ -1,9 +1,8 @@
 import json
-import os
 from google.cloud import bigquery
 
 
-def get_all_orders():
+def get_all_orders_from_bigquery():
     """
     This function gets all orders from bigquery dataset
     :return: DataFrame containing all the order details
@@ -20,7 +19,7 @@ def get_all_orders():
     return orders_df
 
 
-def get_user_details(user_id: int):
+def get_user_details_from_bigquery(user_id: int):
     """
     This function gets the user details from the bigquery dataset using the user ID
     :param user_id:  id of user whose details to fetch
@@ -42,7 +41,7 @@ def get_user_details(user_id: int):
     return json.loads(user_details.to_json(orient='records'))[0]
 
 
-def get_product_ids(order_id: int):
+def get_product_ids_from_bigquery(order_id: int):
     """
     This function uses the order ID and fetches a list of the product IDs of all the products in the order
     :param order_id:  id used to fetch product ids
@@ -61,7 +60,7 @@ def get_product_ids(order_id: int):
     return product_ids['product_id'].tolist()
 
 
-def get_product_details(product_id: int):
+def get_product_details_from_bigquery(product_id: int):
     """
     This function gets the product details from the bigquery dataset using the product ID
     :param product_id: id of product whose details to fetch
@@ -81,39 +80,3 @@ def get_product_details(product_id: int):
 
     # Convert product details to json format and return
     return json.loads(product_details.to_json(orient='records'))[0]
-
-
-def check_user_in_database(user_id):  # TODO
-    return True
-
-
-def insert_user_in_database(user_details):  # TODO
-    pass
-
-
-def check_product_in_database(product_id):
-    return True
-
-
-def insert_product_in_database(product_details):
-    if not check_product_in_database(product_details['id']):
-        # insert into database
-        pass
-
-
-def main():
-    # Replace 'your-gcp-project-id' with your actual Google Cloud project ID
-    os.environ["GCLOUD_PROJECT"] = "recommendation-system-418420"
-
-    for _, row in get_all_orders().iterrows():
-        order_id = row['order_id']
-        user_id = row['user_id']
-        if not check_user_in_database(user_id):
-            insert_user_in_database(get_user_details(user_id))
-        for product_id in get_product_ids(order_id):
-            if not check_product_in_database(product_id):
-                insert_product_in_database(get_product_details(product_id))
-
-
-if __name__ == '__main__':
-    main()

@@ -1,21 +1,10 @@
 import requests
-from neo4j import GraphDatabase
+from src.database.database_setup import DatabaseSetup
 
 product_url = "https://fakestoreapi.com/products"
 user_url = "https://fakestoreapi.com/users"
 cart_url = "https://fakestoreapi.com/carts"
 category_url = "https://fakestoreapi.com/products/categories"
-
-
-def get_neo4j_driver():
-    """
-    # Set up Neo4j credentials
-    :return: Neo4j Connection Driver
-    """
-    neo_uri = "bolt://localhost:7687"
-    neo_user = "neo4j"
-    neo_password = "password"
-    return GraphDatabase.driver(neo_uri, auth=(neo_user, neo_password))       # establish and return Neo4j connection
 
 
 def create_product_node(tx, product):
@@ -159,11 +148,15 @@ def import_data_and_enter_into_database():
     This function imports all the data and puts it into the neo4j datatbase
     :return: None
     """
-    neo_driver = get_neo4j_driver()                         # Get the Neo4j Connection Driver
-    process_categories(neo_driver)                          # Create category nodes in Neo4j
-    create_product_nodes(neo_driver)                        # Create product nodes in Neo4j
-    create_user_nodes(neo_driver)                           # Create user nodes in Neo4j
-    process_cart_data(neo_driver)                           # Create user nodes in Neo4j
+    # Initialize database setup
+    db_setup = DatabaseSetup()
+    # You can add database setup related calls here if needed
+    db_setup.create_constraints()
+
+    process_categories(db_setup.driver)                          # Create category nodes in Neo4j
+    create_product_nodes(db_setup.driver)                        # Create product nodes in Neo4j
+    create_user_nodes(db_setup.driver)                           # Create user nodes in Neo4j
+    process_cart_data(db_setup.driver)                           # Create user nodes in Neo4j
 
 
 if __name__ == '__main__':

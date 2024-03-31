@@ -6,9 +6,9 @@ class TestDatabaseConstraints(unittest.TestCase):
 
     def setUp(self):
         # Initialize the DatabaseSetup with your credentials
-        self.db_setup = DatabaseSetup("bolt://localhost:7687", "neo4j", "password")
+        self.db_setup = DatabaseSetup()
         # Clear the database for testing
-        self.db_setup.clear_database()  # Implement this method to reset the database
+        self.db_setup.clear_database()  # TODO: Implement this method to reset the database
 
     def test_unique_product_id_constraint(self):
         # Create a product node

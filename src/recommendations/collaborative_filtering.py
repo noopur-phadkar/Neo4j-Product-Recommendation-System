@@ -3,11 +3,8 @@ from neo4j import GraphDatabase
 
 class ProductRecommender:
 
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
-
-    def close(self):
-        self.driver.close()
+    def __init__(self, driver):
+        self.driver = driver
 
     def get_user_based_recommendations(self, target_user_id, top_n=5):
         query = """
@@ -38,18 +35,3 @@ class ProductRecommender:
         with self.driver.session() as session:
             result = session.run(query, user_id=target_user_id, top_n=top_n)
             return [record["Recommendation"] for record in result]
-
-
-if __name__ == "__main__":
-    neo_uri = "bolt://localhost:7687"
-    neo_user = "neo4j"
-    neo_password = "password"
-
-    recommender = ProductRecommender(neo_uri, neo_user, neo_password)
-    user_id = "1"  # Replace with the actual target user ID
-
-    print("User-Based Recommendations:", recommender.get_user_based_recommendations(user_id))
-    print("Item-Based Recommendations:", recommender.get_item_based_recommendations(user_id))
-    print("Category-Based Recommendations:", recommender.get_category_based_recommendations(user_id))
-
-    recommender.close()
