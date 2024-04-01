@@ -16,3 +16,7 @@ class DatabaseSetup:
             session.run("CREATE CONSTRAINT ON (u:User) ASSERT u.id IS UNIQUE")
             session.run("CREATE CONSTRAINT ON (p:Product) ASSERT p.id IS UNIQUE")
             session.run("CREATE CONSTRAINT ON (c:Category) ASSERT c.name IS UNIQUE")
+
+    def clear_database(self):
+        with self.driver.session() as session:
+            session.run("MATCH (n) DETACH DELETE n")
